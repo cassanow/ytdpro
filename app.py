@@ -115,21 +115,27 @@ def download_video(job_id, url, quality):
         if quality == "audio":
             format_selector = "bestaudio/best"
         elif quality in ["1080p", "720p", "480p"]:
-            format_selector = f"bestvideo[height<={quality.replace('p', '')}]+bestaudio/best"
+            height = quality.replace('p', '')
+            format_selector = (
+            f"bestvideo[height<={height}][ext=mp4]+bestaudio[ext=m4a]"
+            f"/best[height<={height}][ext=mp4]"
+            f"/best[height<={height}]"
+            f"/best")
         else:
-            format_selector = "bestvideo+bestaudio/best"
+            format_selector = "best[ext=mp4]/best"
 
         ydl_opts = {
-            "format": format_selector,
-            "outtmpl": output_template,
-            "quiet": True,
-            "noplaylist": True,
-            "progress_hooks": [progress_hook_factory(job_id)],
-            "postprocessors": postprocessors,
-            "merge_output_format": "mp4",
-            "cookiefile": "cookies.txt",
-            "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-        }
+                "format": format_selector,
+                "outtmpl": output_template,
+                "quiet": True,
+                "noplaylist": True,
+                "progress_hooks": [progress_hook_factory(job_id)],
+                "merge_output_format": "mp4",
+                "cookiefile": "cookies.txt",
+                "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "extractor_args": {"youtube": {"skip": ["dash", "hls"]}},  # evita formatos que precisam de merge
+                "socket_timeout": 30,
+            }
         
         if FFMPEG_PATH and os.path.exists(FFMPEG_PATH):
             ydl_opts["ffmpeg_location"] = FFMPEG_PATH
