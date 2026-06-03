@@ -105,18 +105,12 @@ def download_video(job_id, url, quality):
     try:
         output_template = os.path.join(DOWNLOAD_FOLDER, f"{job_id}_%(title).80s.%(ext)s")
         postprocessors = []
-
-      # Lógica de formato com fallback (se não achar 1080p, pega o que tiver)
+# Configuração de formato simplificada e robusta
         if quality == "audio":
             format_selector = "bestaudio/best"
-        elif quality == "1080p":
-            # Tenta 1080p, se não achar, cai para o melhor vídeo disponível
-            format_selector = "bestvideo[height<=1080]+bestaudio/best[height<=1080]/best[height<=1080]/best"
-        elif quality == "720p":
-            format_selector = "bestvideo[height<=720]+bestaudio/best[height<=720]/best[height<=720]/best"
-        elif quality == "480p":
-            format_selector = "bestvideo[height<=480]+bestaudio/best[height<=480]/best[height<=480]/best"
         else:
+            # Esta combinação é a mais estável para o yt-dlp
+            # Ele pega o melhor vídeo disponível + o melhor áudio e junta
             format_selector = "bestvideo+bestaudio/best"
 
         ydl_opts = {
