@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>YT Downloader PRO | Baixe vídeos e músicas</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='7' fill='%23DEF241'/%3E%3Cpath d='M10 8.5v7l6-3.5-6-3.5z' fill='%230F1117'/%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<a class="app-logo" href="#" onclick="return false;" style="cursor:default;">
+    <div class="logo-icon">
+        <i class="fab fa-youtube"></i>
+    </div>
+    <div class="logo-text">YTDPRO</div>
+</a>
+
+<div class="card">
+    <div class="corner-top-right"></div>
+    <div class="corner-bottom-left"></div>
+
+    <div class="logo-area">
+        <div class="logo">
+            <span class="yt">YT DOWNLOADER</span>
+            <span class="pro">[PRO]</span>
+        </div>
+    </div>
+    <div class="subtitle">Baixe vídeos e músicas do YouTube com alta velocidade e qualidade</div>
+
+    <div class="input-group">
+        <input type="text" class="url-input" id="urlInput" placeholder="https://www.youtube.com/watch?v=...">
+    </div>
+
+    <div class="thumbnail-area" id="thumbnailArea">
+        <iframe id="videoPlayer" class="thumbnail-img" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <div class="quality-label">
+        <span class="quality-title"><i class="fas fa-sliders-h" style="margin-right: 6px;"></i> QUALIDADE / FORMATO</span>
+    </div>
+
+    <div class="grid-qualities" id="qualityGrid">
+        <button class="q-btn active" data-quality="best"><i class="fas fa-crown"></i> BEST <span class="sub">Original</span></button>
+        <button class="q-btn" data-quality="1080p"><i class="fas fa-tv"></i> 1080p <span class="sub">Full HD</span></button>
+        <button class="q-btn" data-quality="720p"><i class="fas fa-tablet-alt"></i> 720p <span class="sub">HD Ready</span></button>
+        <button class="q-btn" data-quality="480p"><i class="fas fa-film"></i> 480p <span class="sub">SD</span></button>
+        <button class="q-btn" data-quality="audio"><i class="fas fa-headphones"></i> MP3 <span class="sub">320kbps</span></button>
+    </div>
+
+    <div class="download-wrapper">
+        <button class="download-main" id="downloadBtn" onclick="window.executarDownload(event)">
+            <i class="fas fa-download"></i> BAIXAR AGORA
+        </button>
+    </div>
+
+    <div id="progressContainer" class="progress-panel hidden">
+        <div class="progress-header">
+            <span id="progressPercent">0%</span>
+            <span id="stageLabel">Inicializando</span>
+        </div>
+        <div class="progress-bar-bg">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="status-message" id="statusMsg"></div>
+        <div class="save-area" id="saveArea"></div>
+    </div>
+</div>
+
+<div class="floating-ffmpeg" id="ffmpegStatus">
+    <span class="status-led" id="ffLed"></span>
+    <span id="ffText">Verificando FFmpeg...</span>
+</div>
+
+<script src="/static/script.js"></script>
+</body>
+</html>
