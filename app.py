@@ -106,19 +106,16 @@ def download_video(job_id, url, quality):
         output_template = os.path.join(DOWNLOAD_FOLDER, f"{job_id}_%(title).80s.%(ext)s")
         postprocessors = []
 
+      # Lógica de formato com fallback (se não achar 1080p, pega o que tiver)
         if quality == "audio":
             format_selector = "bestaudio/best"
-            postprocessors = [{
-                "key": "FFmpegExtractAudio",
-                "preferredcodec": "mp3",
-                "preferredquality": "192"
-            }]
         elif quality == "1080p":
-            format_selector = "bestvideo[height<=1080]+bestaudio/best"
+            # Tenta 1080p, se não achar, cai para o melhor vídeo disponível
+            format_selector = "bestvideo[height<=1080]+bestaudio/best[height<=1080]/best[height<=1080]/best"
         elif quality == "720p":
-            format_selector = "bestvideo[height<=720]+bestaudio/best"
+            format_selector = "bestvideo[height<=720]+bestaudio/best[height<=720]/best[height<=720]/best"
         elif quality == "480p":
-            format_selector = "bestvideo[height<=480]+bestaudio/best"
+            format_selector = "bestvideo[height<=480]+bestaudio/best[height<=480]/best[height<=480]/best"
         else:
             format_selector = "bestvideo+bestaudio/best"
 
