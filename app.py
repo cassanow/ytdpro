@@ -13,6 +13,11 @@ from flask import (
     render_template
 )
 
+cookies_content = os.environ.get('COOKIES_CONTENT')
+if cookies_content:
+    with open("cookies.txt", "w") as f:
+        f.write(cookies_content)
+
 from flask_sqlalchemy import SQLAlchemy
 from yt_dlp import YoutubeDL
 
