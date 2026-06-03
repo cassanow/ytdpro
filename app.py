@@ -130,6 +130,7 @@ def download_video(job_id, url, quality):
             "progress_hooks": [progress_hook_factory(job_id)],
             "postprocessors": postprocessors,
             "merge_output_format": "mp4",
+            "cookiefile": "cookies.txt",
         }
         
         if FFMPEG_PATH and os.path.exists(FFMPEG_PATH):
